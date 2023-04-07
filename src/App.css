@@ -4,11 +4,22 @@
 
 
 body {
-  color: #566787;
-  background: #f5f5f5;
-  font-family: 'Varela Round', sans-serif;
-  font-size: 13px;
+  color: #566787 !important;
+  background: #f8f9fa !important;
+  font-family: 'Varela Round', sans-serif !important;
+  font-size: 13px !important;
 }
+
+.page-wrapper {
+  background-color: #fff;
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 2px !important;
+}
+
 .table-responsive {
   margin: 30px 0;
 }
@@ -24,12 +35,10 @@ body {
   background: #299be4;
   color: #fff;
   padding: 16px 30px;
-  margin: -20px -25px 10px;
-  border-radius: 3px 3px 0 0;
-  margin-bottom: 30px;
+  border-radius: 5px 5px 0 0;
+  margin: 0px -12px;
 }
 .table-title h2 {
-  margin: 5px 0 0;
   font-size: 24px;
 }
 .table-title .btn {
@@ -187,11 +196,11 @@ table.table .avatar {
   z-index: 1;
 }
 
-.btn-facebook {
-  background-color: #405D9D;
-  color: #fff;
+.form-wrapper {
+  padding: 20px;
+  border-bottom: 0.5px solid #ddd;
 }
-.btn-twitter {
-  background-color: #42AEEC;
-  color: #fff;
+
+.button-wrapper {
+  text-align: end;
 }
