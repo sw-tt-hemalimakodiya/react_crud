@@ -1,7 +1,52 @@
 import './App.css';
 import { AVATAR_IMAGE_URL, EMPLOYEE_LABEL } from './common/constant'
+import { useState } from 'react';
 
 function App() {
+
+  const formData = {
+    username: "",
+    employee_code: "",
+    email: "",
+    contact_no: "",
+    dob: "",
+    profile: "",
+    joining_date: "",
+    experience: "",
+    status: "",
+    gender: ""
+  }
+
+  const [responseBody, setResponseBody] = useState(formData)
+  const inputChangeHandler = (event) => {
+    const { name, value } = event.target
+    setResponseBody({ ...responseBody, [name]: value }, () => { validateField(name, value) })
+  }
+
+  const onSubmitHandler = (event) => {
+    event.preventDefault()
+    console.log(responseBody)
+  }
+
+  const validateField = (fieldName, value) => {
+    let fieldValidationErrors = this.state.formErrors;
+    let emailValid = this.state.emailValid;
+    let passwordValid = this.state.passwordValid;
+
+    switch (fieldName) {
+      case 'email':
+        emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+        fieldValidationErrors.email = emailValid ? '' : ' is invalid';
+        break;
+      case 'password':
+        passwordValid = value.length >= 6;
+        fieldValidationErrors.password = passwordValid ? '' : ' is too short';
+        break;
+      default:
+        break;
+    }
+  }
+
   return (
     <div className="container page-wrapper">
       <div className="table-title">
@@ -17,78 +62,97 @@ function App() {
       </div>
       <div className='form-wrapper'>
         <h5 className="mb-3"> <b>ADD {EMPLOYEE_LABEL} </b></h5>
-        <form>
+        <form onSubmit={onSubmitHandler}>
           <div className='row'>
             <div className="col-md-6 mb-3">
-              <label className="form-label" htmlFor="name">Username</label>
+              <label className="form-label" htmlFor="username">Username</label>
               <div className="input-group">
-                <input type="text" className="form-control" id="name" required />
+                <input type="text" className="form-control" name="username" id="username" onChange={(e) => inputChangeHandler(e)} required />
               </div>
             </div>
             <div className="col-md-6 mb-3">
-              <label className="form-label" htmlFor="name">Employee Code</label>
+              <label className="form-label" htmlFor="employee_code">Employee Code</label>
               <div className="input-group">
-                <input type="text" className="form-control" id="employee_code" required />
+                <input type="text" className="form-control" name="employee_code" id="employee_code" onChange={(e) => inputChangeHandler(e)} required />
               </div>
             </div>
           </div>
 
           <div className='row'>
             <div className="col-md-6 mb-3">
-              <label className="form-label" htmlFor="name">Email</label>
+              <label className="form-label" htmlFor="email">Email</label>
               <div className="input-group">
-                <input type="email" className="form-control" id="email" required />
+                <input type="email" className="form-control" name="email" id="email" onChange={(e) => inputChangeHandler(e)} required />
               </div>
             </div>
             <div className="col-md-6 mb-3">
-              <label className="form-label" htmlFor="name">Contact No</label>
+              <label className="form-label" htmlFor="contact_no">Contact No</label>
               <div className="input-group">
-                <input type="text" className="form-control" id="contact_no" required />
-              </div>
-            </div>
-          </div>
-
-          <div className='row'>
-            <div className="col-md-6 mb-3">
-              <label className="form-label" htmlFor="name">Date Of Birth</label>
-              <div className="input-group">
-                <input type="date" className="form-control" id="dob" required />
-              </div>
-            </div>
-            <div className="col-md-6 mb-3">
-              <label className="form-label" htmlFor="name">Profile Pic</label>
-              <div className="input-group">
-                <input type="file" className="form-control" id="profile" required />
+                <input type="text" className="form-control" name="contact_no" id="contact_no" onChange={(e) => inputChangeHandler(e)} required />
               </div>
             </div>
           </div>
 
           <div className='row'>
             <div className="col-md-6 mb-3">
-              <label className="form-label" htmlFor="name">Joining Date</label>
+              <label className="form-label" htmlFor="dob">Date Of Birth</label>
               <div className="input-group">
-                <input type="date" className="form-control" id="joining_date" required />
+                <input type="date" className="form-control" name="dob" id="dob" onChange={(e) => inputChangeHandler(e)} required />
               </div>
             </div>
             <div className="col-md-6 mb-3">
-              <label className="form-label" htmlFor="name">Experience</label>
+              <label className="form-label" htmlFor="profile">Profile Pic</label>
               <div className="input-group">
-                <input type="text" className="form-control" id="gender" required />
+                <input type="file" className="form-control" name="profile" id="profile" onChange={(e) => inputChangeHandler(e)} required />
               </div>
             </div>
           </div>
 
           <div className='row'>
             <div className="col-md-6 mb-3">
-              <label className="form-label" htmlFor="name">Status</label>
+              <label className="form-label" htmlFor="joining_date">Joining Date</label>
               <div className="input-group">
-                <input type="text" className="form-control" id="status" required />
+                <input type="date" className="form-control" name="joining_date" id="joining_date" onChange={(e) => inputChangeHandler(e)} required />
               </div>
             </div>
             <div className="col-md-6 mb-3">
-              <label className="form-label" htmlFor="name">Gender</label>
+              <label className="form-label" htmlFor="experience">Experience</label>
               <div className="input-group">
-                <input type="text" className="form-control" id="gender" required />
+                <select className="form-control form-select" name="experience" id='experience' onSelect={(e) => inputChangeHandler(e)}>
+                  <option selected="">Select Experience</option>
+                  <option value="0_1">0 to 1 Year</option>
+                  <option value="1_3">1 to 3 Year</option>
+                  <option value="3_5">3 to 5 Year</option>
+                  <option value="5_20">5+ Year</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div className='row'>
+            <div className="col-md-6 mb-3">
+              <label className="form-label" htmlFor="status">Status</label>
+              <div className="input-group">
+                <select className="form-control form-select" name="status" id='status' onSelect={(e) => inputChangeHandler(e)}>
+                  <option selected="">Select Status</option>
+                  <option value="active">Active</option>
+                  <option value="in_active">Inactive</option>
+                  <option value="suspended">Suspended</option>
+                </select>
+              </div>
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label" htmlFor="gender">Gender</label>
+              <div className="input-group">
+                <label className="form-label" htmlFor='male'>
+                  <input type="radio" className="form-check-inline form-check-input" name="gender" value="male" onChange={(e) => inputChangeHandler(e)} />Male
+                </label>
+              </div>
+
+              <div className="input-group">
+                <label className="form-label" htmlFor='female'>
+                  <input type="radio" className="form-check-inline form-check-input" name="gender" value="female" onChange={(e) => inputChangeHandler(e)} />Female
+                </label>
               </div>
             </div>
           </div>
