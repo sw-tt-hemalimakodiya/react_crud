@@ -1,6 +1,7 @@
 import './App.css';
-import { AVATAR_IMAGE_URL, EMPLOYEE_LABEL } from './common/constant'
-import { useState } from 'react';
+import { AVATAR_IMAGE_URL, EMPLOYEE_LABEL } from './include/constant'
+import { validate } from './include/common';
+import {useForm} from './custome/useForm'
 
 function App() {
 
@@ -17,35 +18,17 @@ function App() {
     gender: ""
   }
 
-  const [responseBody, setResponseBody] = useState(formData)
-  const inputChangeHandler = (event) => {
-    const { name, value } = event.target
-    setResponseBody({ ...responseBody, [name]: value }, () => { validateField(name, value) })
-  }
+  const {
+    values,
+    errors,
+    handleChange,
+    handleSubmit,
+  } = useForm(formData, login, validate);
 
-  const onSubmitHandler = (event) => {
-    event.preventDefault()
-    console.log(responseBody)
+  function login() {
+    console.log('No errors, submit callback called!');
   }
-
-  const validateField = (fieldName, value) => {
-    let fieldValidationErrors = this.state.formErrors;
-    let emailValid = this.state.emailValid;
-    let passwordValid = this.state.passwordValid;
-
-    switch (fieldName) {
-      case 'email':
-        emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-        fieldValidationErrors.email = emailValid ? '' : ' is invalid';
-        break;
-      case 'password':
-        passwordValid = value.length >= 6;
-        fieldValidationErrors.password = passwordValid ? '' : ' is too short';
-        break;
-      default:
-        break;
-    }
-  }
+  
 
   return (
     <div className="container page-wrapper">
@@ -62,18 +45,18 @@ function App() {
       </div>
       <div className='form-wrapper'>
         <h5 className="mb-3"> <b>ADD {EMPLOYEE_LABEL} </b></h5>
-        <form onSubmit={onSubmitHandler}>
+        <form onSubmit={handleSubmit}>
           <div className='row'>
             <div className="col-md-6 mb-3">
               <label className="form-label" htmlFor="username">Username</label>
               <div className="input-group">
-                <input type="text" className="form-control" name="username" id="username" onChange={(e) => inputChangeHandler(e)} required />
+                <input type="text" className="form-control" name="username" id="username" onBlur={(e) => handleChange(e)}  />
               </div>
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label" htmlFor="employee_code">Employee Code</label>
               <div className="input-group">
-                <input type="text" className="form-control" name="employee_code" id="employee_code" onChange={(e) => inputChangeHandler(e)} required />
+                <input type="text" className="form-control" name="employee_code" id="employee_code" onBlur={(e) => handleChange(e)}  />
               </div>
             </div>
           </div>
@@ -82,13 +65,14 @@ function App() {
             <div className="col-md-6 mb-3">
               <label className="form-label" htmlFor="email">Email</label>
               <div className="input-group">
-                <input type="email" className="form-control" name="email" id="email" onChange={(e) => inputChangeHandler(e)} required />
+                <input type="text" className="form-control" name="email" id="email" onBlur={(e) => handleChange(e)}  />
               </div>
+              {errors.email && ( <p className="help is-danger">{errors.email}</p> )}
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label" htmlFor="contact_no">Contact No</label>
               <div className="input-group">
-                <input type="text" className="form-control" name="contact_no" id="contact_no" onChange={(e) => inputChangeHandler(e)} required />
+                <input type="text" className="form-control" name="contact_no" id="contact_no" onBlur={(e) => handleChange(e)}  />
               </div>
             </div>
           </div>
@@ -97,13 +81,13 @@ function App() {
             <div className="col-md-6 mb-3">
               <label className="form-label" htmlFor="dob">Date Of Birth</label>
               <div className="input-group">
-                <input type="date" className="form-control" name="dob" id="dob" onChange={(e) => inputChangeHandler(e)} required />
+                <input type="date" className="form-control" name="dob" id="dob" onBlur={(e) => handleChange(e)}  />
               </div>
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label" htmlFor="profile">Profile Pic</label>
               <div className="input-group">
-                <input type="file" className="form-control" name="profile" id="profile" onChange={(e) => inputChangeHandler(e)} required />
+                <input type="file" className="form-control" name="profile" id="profile" onBlur={(e) => handleChange(e)}  />
               </div>
             </div>
           </div>
@@ -112,14 +96,14 @@ function App() {
             <div className="col-md-6 mb-3">
               <label className="form-label" htmlFor="joining_date">Joining Date</label>
               <div className="input-group">
-                <input type="date" className="form-control" name="joining_date" id="joining_date" onChange={(e) => inputChangeHandler(e)} required />
+                <input type="date" className="form-control" name="joining_date" id="joining_date" onBlur={(e) => handleChange(e)}  />
               </div>
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label" htmlFor="experience">Experience</label>
               <div className="input-group">
-                <select className="form-control form-select" name="experience" id='experience' onSelect={(e) => inputChangeHandler(e)}>
-                  <option selected="">Select Experience</option>
+                <select className="form-control form-select" name="experience" id='experience' onSelect={(e) => handleChange(e)}>
+                  <option value="">Select Experience</option>
                   <option value="0_1">0 to 1 Year</option>
                   <option value="1_3">1 to 3 Year</option>
                   <option value="3_5">3 to 5 Year</option>
@@ -133,8 +117,8 @@ function App() {
             <div className="col-md-6 mb-3">
               <label className="form-label" htmlFor="status">Status</label>
               <div className="input-group">
-                <select className="form-control form-select" name="status" id='status' onSelect={(e) => inputChangeHandler(e)}>
-                  <option selected="">Select Status</option>
+                <select className="form-control form-select" name="status" id='status' onSelect={(e) => handleChange(e)}>
+                  <option value="">Select Status</option>
                   <option value="active">Active</option>
                   <option value="in_active">Inactive</option>
                   <option value="suspended">Suspended</option>
@@ -145,13 +129,13 @@ function App() {
               <label className="form-label" htmlFor="gender">Gender</label>
               <div className="input-group">
                 <label className="form-label" htmlFor='male'>
-                  <input type="radio" className="form-check-inline form-check-input" name="gender" value="male" onChange={(e) => inputChangeHandler(e)} />Male
+                  <input type="radio" className="form-check-inline form-check-input" name="gender" value="male" onChange={(e) => handleChange(e)} />Male
                 </label>
               </div>
 
               <div className="input-group">
                 <label className="form-label" htmlFor='female'>
-                  <input type="radio" className="form-check-inline form-check-input" name="gender" value="female" onChange={(e) => inputChangeHandler(e)} />Female
+                  <input type="radio" className="form-check-inline form-check-input" name="gender" value="female" onChange={(e) => handleChange(e)} />Female
                 </label>
               </div>
             </div>
