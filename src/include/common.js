@@ -1,35 +1,27 @@
-import { EMAIL_REGEX, EMP_CODE_REGEX, PASSWORD_REGEX } from "./constant";
-
-const requiredFieldValidation = (fieldName, value) => {
-    return value ? '' : `${fieldName} is required`;
+import { EMAIL_REGEX, EMP_CODE_REGEX, CONTACT_NUMBER_REGEX } from "./constant";
+const demo = {
+    username: {required: true},
+    employee_code: {required: true, match: [EMP_CODE_REGEX, "Employee code should have this format (P-1234)"]},
+    email: {required: true, match: [EMAIL_REGEX, "Please enter valid email"]},
+    contact_no: {required: true, match: [CONTACT_NUMBER_REGEX, "Contact number should have minimum 10 digit"]},
+    dob: {required: true},
+    profile: {required: true},
+    joining_date: {required: true},
+    experience: {required: true},
+    status: {required: true},
+    gender: {required: true}
 }
-
-const regExValidation = (value, regEx) => {
-    return value.match(regEx);
-}
+let errors = {};
 
 const validate = (fieldName, value) => {
-    let errors = {};
     
-    switch (fieldName) {
-        case 'email':
-            
-            if (!value) {
-                errors.email = 'Email address is required';
-            } else if (!value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
-                console.log("invalid email=====");
-                errors.email = 'Email address is invalid';
-            }
-            break;
-        case 'password':
-            if (!value) {
-                errors.password = 'Password is required';
-            } else if (value.length < 8) {
-                errors.password = 'Password must be 8 or more characters';
-            }
-            break;
-        default:
-            break;
+    let checkIsValid = demo[fieldName];
+    if (checkIsValid.required && !value) {
+        errors[fieldName] = `${fieldName} is required`
+    } else if(checkIsValid.match && !value.match(checkIsValid.match[0])) {
+        errors[fieldName] = checkIsValid.match[1]
+    } else {
+        errors[fieldName] = ''
     }
 
     console.log("Inside validate function ===>", errors);

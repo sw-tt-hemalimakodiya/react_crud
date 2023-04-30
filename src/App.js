@@ -47,59 +47,65 @@ function App() {
         <h5 className="mb-3"> <b>ADD {EMPLOYEE_LABEL} </b></h5>
         <form onSubmit={handleSubmit}>
           <div className='row'>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-2">
               <label className="form-label" htmlFor="username">Username</label>
               <div className="input-group">
-                <input type="text" className="form-control" name="username" id="username" onBlur={(e) => handleChange(e)}  />
+                <input type="text" className="form-control" name="username" id="username" onChange={(e) => handleChange(e)}  />
               </div>
+              {errors.username && ( <p className="error-msg">{errors.username}</p> )}
             </div>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-2">
               <label className="form-label" htmlFor="employee_code">Employee Code</label>
               <div className="input-group">
-                <input type="text" className="form-control" name="employee_code" id="employee_code" onBlur={(e) => handleChange(e)}  />
+                <input type="text" className="form-control" name="employee_code" id="employee_code" onChange={(e) => handleChange(e)}  />
               </div>
+              {errors.employee_code && ( <p className="error-msg">{errors.employee_code}</p> )}
             </div>
           </div>
 
           <div className='row'>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-2">
               <label className="form-label" htmlFor="email">Email</label>
               <div className="input-group">
-                <input type="text" className="form-control" name="email" id="email" onBlur={(e) => handleChange(e)}  />
+                <input type="text" className="form-control" name="email" id="email" onChange={(e) => handleChange(e)}  />
               </div>
-              {errors.email && ( <p className="help is-danger">{errors.email}</p> )}
+              {errors.email && ( <p className="error-msg">{errors.email}</p> )}
             </div>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-2">
               <label className="form-label" htmlFor="contact_no">Contact No</label>
               <div className="input-group">
-                <input type="text" className="form-control" name="contact_no" id="contact_no" onBlur={(e) => handleChange(e)}  />
+                <input type="text" className="form-control" name="contact_no" id="contact_no" onChange={(e) => handleChange(e)}  />
               </div>
+              {errors.contact_no && ( <p className="error-msg">{errors.contact_no}</p> )}
             </div>
           </div>
 
           <div className='row'>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-2">
               <label className="form-label" htmlFor="dob">Date Of Birth</label>
               <div className="input-group">
-                <input type="date" className="form-control" name="dob" id="dob" onBlur={(e) => handleChange(e)}  />
+                <input type="date" className="form-control" name="dob" id="dob" onChange={(e) => handleChange(e)}  />
               </div>
+              {errors.dob && ( <p className="error-msg">{errors.dob}</p> )}
             </div>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-2">
               <label className="form-label" htmlFor="profile">Profile Pic</label>
               <div className="input-group">
-                <input type="file" className="form-control" name="profile" id="profile" onBlur={(e) => handleChange(e)}  />
+                <input type="file" className="form-control" name="profile" id="profile" onChange={(e) => handleChange(e)}  />
               </div>
+              {errors.profile && ( <p className="error-msg">{errors.profile}</p> )}
             </div>
           </div>
 
           <div className='row'>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-2">
               <label className="form-label" htmlFor="joining_date">Joining Date</label>
               <div className="input-group">
-                <input type="date" className="form-control" name="joining_date" id="joining_date" onBlur={(e) => handleChange(e)}  />
+                <input type="date" className="form-control" name="joining_date" id="joining_date" onChange={(e) => handleChange(e)}  />
               </div>
+              {errors.joining_date && ( <p className="error-msg">{errors.joining_date}</p> )}
             </div>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-2">
               <label className="form-label" htmlFor="experience">Experience</label>
               <div className="input-group">
                 <select className="form-control form-select" name="experience" id='experience' onSelect={(e) => handleChange(e)}>
@@ -110,11 +116,12 @@ function App() {
                   <option value="5_20">5+ Year</option>
                 </select>
               </div>
+              {errors.experience && ( <p className="error-msg">{errors.experience}</p> )}
             </div>
           </div>
 
           <div className='row'>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-2">
               <label className="form-label" htmlFor="status">Status</label>
               <div className="input-group">
                 <select className="form-control form-select" name="status" id='status' onSelect={(e) => handleChange(e)}>
@@ -124,8 +131,9 @@ function App() {
                   <option value="suspended">Suspended</option>
                 </select>
               </div>
+              {errors.status && ( <p className="error-msg">{errors.status}</p> )}
             </div>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-2">
               <label className="form-label" htmlFor="gender">Gender</label>
               <div className="input-group">
                 <label className="form-label" htmlFor='male'>
@@ -138,6 +146,7 @@ function App() {
                   <input type="radio" className="form-check-inline form-check-input" name="gender" value="female" onChange={(e) => handleChange(e)} />Female
                 </label>
               </div>
+              {errors.gender && ( <p className="error-msg">{errors.gender}</p> )}
             </div>
           </div>
 

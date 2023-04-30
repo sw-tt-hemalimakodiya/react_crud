@@ -204,3 +204,8 @@ table.table .avatar {
 .button-wrapper {
   text-align: end;
 }
+
+.error-msg {
+  margin: 0px 0px 0px 2px;
+  color: red;
+}
