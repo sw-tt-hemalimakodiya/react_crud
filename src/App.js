@@ -23,6 +23,7 @@ function App() {
     errors,
     handleChange,
     handleSubmit,
+    demoHandleSubmit
   } = useForm(formData, login, validate);
 
   function login() {
@@ -45,6 +46,20 @@ function App() {
       </div>
       <div className='form-wrapper'>
         <h5 className="mb-3"> <b>ADD {EMPLOYEE_LABEL} </b></h5>
+
+        <form onSubmit={demoHandleSubmit}>
+          <div className="form-group">
+            <label htmlFor="exampleInputEmail1">Email address</label>
+            <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+            <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+
+          <div className='button-wrapper'>
+            <button type="type" className="btn btn-secondary btn-block me-2"> Cancle  </button>
+            <button type="submit" className="btn btn-primary btn-block"> Create Account  </button>
+          </div>
+        </form>
+        
         <form onSubmit={handleSubmit}>
           <div className='row'>
             <div className="col-md-6 mb-2">
@@ -108,7 +123,7 @@ function App() {
             <div className="col-md-6 mb-2">
               <label className="form-label" htmlFor="experience">Experience</label>
               <div className="input-group">
-                <select className="form-control form-select" name="experience" id='experience' onSelect={(e) => handleChange(e)}>
+                <select className="form-control form-select" name="experience" id='experience' onChange={(e) => handleChange(e)}>
                   <option value="">Select Experience</option>
                   <option value="0_1">0 to 1 Year</option>
                   <option value="1_3">1 to 3 Year</option>
@@ -124,7 +139,7 @@ function App() {
             <div className="col-md-6 mb-2">
               <label className="form-label" htmlFor="status">Status</label>
               <div className="input-group">
-                <select className="form-control form-select" name="status" id='status' onSelect={(e) => handleChange(e)}>
+                <select className="form-control form-select" name="status" id='status' onChange={(e) => handleChange(e)}>
                   <option value="">Select Status</option>
                   <option value="active">Active</option>
                   <option value="in_active">Inactive</option>
