@@ -4,14 +4,13 @@ import { validate } from './include/common';
 import {useForm} from './custome/useForm'
 
 function App() {
-
+  
   const formData = {
     username: "",
     employee_code: "",
     email: "",
     contact_no: "",
     dob: "",
-    profile: "",
     joining_date: "",
     experience: "",
     status: "",
@@ -23,7 +22,7 @@ function App() {
     errors,
     handleChange,
     handleSubmit,
-    demoHandleSubmit
+    handleFileUpload,
   } = useForm(formData, login, validate);
 
   function login() {
@@ -47,10 +46,10 @@ function App() {
       <div className='form-wrapper'>
         <h5 className="mb-3"> <b>ADD {EMPLOYEE_LABEL} </b></h5>
 
-        <form onSubmit={demoHandleSubmit}>
+        {/* <form onSubmit={demoHandleSubmit}>
           <div className="form-group">
             <label htmlFor="exampleInputEmail1">Email address</label>
-            <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+            <input type="file" className="form-control" name="demofile" onChange={(e) => handleFileUpload(e)}/>
             <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
           </div>
 
@@ -58,7 +57,7 @@ function App() {
             <button type="type" className="btn btn-secondary btn-block me-2"> Cancle  </button>
             <button type="submit" className="btn btn-primary btn-block"> Create Account  </button>
           </div>
-        </form>
+        </form> */}
         
         <form onSubmit={handleSubmit}>
           <div className='row'>
@@ -106,7 +105,7 @@ function App() {
             <div className="col-md-6 mb-2">
               <label className="form-label" htmlFor="profile">Profile Pic</label>
               <div className="input-group">
-                <input type="file" className="form-control" name="profile" id="profile" onChange={(e) => handleChange(e)}  />
+                <input type="file" className="form-control" name="profile" id="profile" onChange={(e) => handleFileUpload(e)}  />
               </div>
               {errors.profile && ( <p className="error-msg">{errors.profile}</p> )}
             </div>

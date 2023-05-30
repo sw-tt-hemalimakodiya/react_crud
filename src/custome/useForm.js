@@ -1,11 +1,11 @@
-import { async } from 'q';
 import { useState, useEffect } from 'react';
 
-const useForm = (formData, callback, validate) => {
+const useForm = (formInputs, callback, validate) => {
 
-  const [values, setValues] = useState(formData);
+  const [values, setValues] = useState(formInputs);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [file, setFile] = useState();
 
   useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
@@ -15,53 +15,39 @@ const useForm = (formData, callback, validate) => {
 
   const handleSubmit = async (event) => {
     if (event) event.preventDefault();
-    console.log("Inside handleSubmit ===>", values);
-    //setErrors(validate(values));
+    let formData = new FormData();
+    for (var key in values) {
+      formData.append(key, values[key]);
+    }
+    formData.append("file", file)
+    
     setIsSubmitting(true);
     
     const response = await fetch('http://localhost:5000/employee', {
       method: 'POST',
-      headers: {
-        'Content-Type': "application/x-www-form-urlencoded"
-      },
-      body: values,
+      body: formData,
     });
-
-    // const response = await fetch('http://localhost:5000/demo', {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    // });
-    console.log("After response ===>", response);
   };
-
-  const demoHandleSubmit = async (event) => {
-    if (event) event.preventDefault();
-    console.log("Inside demoHandleSubmit");
-    const response2 = await fetch('http://localhost:5000/demo', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    console.log("After response2 ===>", response2);
-  }
 
   const handleChange = (event) => {
     event.persist();
-    const {name, value} = event.target
-    console.log("Inside handleChange =====> ", name);
-    setValues({ ...values, [name]: value });
-    setErrors(validate(name, value));
+    const {name, value} = event.target;
+    setErrors({...validate(name, value)});
+    setValues({...values, [name]: value});
   };
+
+  const handleFileUpload = (e) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+    }
+  }
 
   return {
     handleChange,
     handleSubmit,
-    demoHandleSubmit,
+    handleFileUpload,
     values,
-    errors,
+    errors
   }
 };
 
