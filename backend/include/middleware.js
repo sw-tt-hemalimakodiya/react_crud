@@ -19,6 +19,7 @@ module.exports = {
                 result.error = "Oops, There is server error";
                 break;
         }
+        console.log("Inside middleware ====>", result);
         res.status(result.status || 500).send(result);
     }
 }

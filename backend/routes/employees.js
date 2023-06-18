@@ -40,13 +40,16 @@ module.exports = app => {
         }
     })
 
-    app.post('/employee', upload.single('file'), async (req, res, next) => {
+    //app.post('/employee', upload.single('file'), async (req, res, next) => {
+    app.post('/employee', async (req, res, next) => {
         try {
-            req.body.profile = req.file.path.replace(/\\/g, "\\");
-            console.log("Inside post endpoint ===> ", JSON.stringify(req.body));
+            console.log("Adding employee ===>", req.body);
+            // req.body.profile = req.file.path.replace(/\\/g, "\\");
+            // console.log("Inside post endpoint ===> ", JSON.stringify(req.body));
             const result = await Employee.create(req.body);
             res.status(200).json(result)
         } catch (error) {
+            console.log("Inside catch====", error);
             next(error)
         }
     })

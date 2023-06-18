@@ -1,8 +1,27 @@
 import { useState, useEffect } from 'react';
+import { EMAIL_REGEX, EMP_CODE_REGEX, CONTACT_NUMBER_REGEX } from "../include/constant";
 
-const useForm = (formInputs, callback, validate) => {
 
-  const [values, setValues] = useState(formInputs);
+
+// const validate = (fieldName, value) => {
+
+//   let checkIsValid = demo[fieldName];
+//   if (checkIsValid.required && !value) {
+//     errors[fieldName] = `${fieldName} is required`
+//   } else if (checkIsValid.match && !value.match(checkIsValid.match[0])) {
+//     errors[fieldName] = checkIsValid.match[1]
+//   } else {
+//     errors[fieldName] = ''
+//   }
+
+//   console.log("Inside validate function ===>", errors);
+
+//   return errors;
+// }
+
+const useForm = (callback, validate) => {
+
+  //const [values, setValues] = useState(formMetadata);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [file, setFile] = useState();
@@ -11,7 +30,7 @@ const useForm = (formInputs, callback, validate) => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
       callback();
     }
-  }, [errors]);                                                                                   
+  }, [errors]);
 
   const handleSubmit = async (event) => {
     if (event) event.preventDefault();
@@ -20,9 +39,9 @@ const useForm = (formInputs, callback, validate) => {
       formData.append(key, values[key]);
     }
     formData.append("file", file)
-    
+
     setIsSubmitting(true);
-    
+
     const response = await fetch('http://localhost:5000/employee', {
       method: 'POST',
       body: formData,
@@ -31,9 +50,11 @@ const useForm = (formInputs, callback, validate) => {
 
   const handleChange = (event) => {
     event.persist();
-    const {name, value} = event.target;
-    setErrors({...validate(name, value)});
-    setValues({...values, [name]: value});
+    const { name, value } = event.target;
+
+    //setErrors({ ...validate(name, value) });
+    //formMetadata[name].value = value;
+    setValues({ formMetadata });
   };
 
   const handleFileUpload = (e) => {
@@ -51,4 +72,4 @@ const useForm = (formInputs, callback, validate) => {
   }
 };
 
-export {useForm} ;
+export { useForm };

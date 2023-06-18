@@ -7,7 +7,7 @@ const EmployeeSchema = new Schema({
     email: { type: String, required: true, trim: true, unique: true }, 
     contact_no: { type: String, required: true, trim: true }, 
     dob: { type: Date, required: true, trim: true }, 
-    profile: { type: String, required: true, trim: true }, 
+    //profile: { type: String, required: true, trim: true }, 
     gender: { type: String, required: true, trim: true }, 
     joining_date: { type: Date, required: true, trim: true }, 
     experience : { type: String, required: true},
